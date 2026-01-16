@@ -155,8 +155,8 @@ def extract_attendees(doc: Dict) -> List[Attendee]:
     for attendee in cal_event.get('attendees', []):
         email = attendee.get('email', '')
 
-        # Skip your own emails
-        if not email or 'varadh' in email.lower():
+        # Skip if no email or marked as self
+        if not email or attendee.get('self'):
             continue
 
         attendees.append(Attendee(

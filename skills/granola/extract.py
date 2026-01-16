@@ -81,7 +81,7 @@ def check_setup():
     except Exception as e:
         return {
             'status': 'error',
-            'message': f'Setup error: {e}'
+            'message': f'Setup error: {e}\n\nPlease ensure:\n1. File exists: ~/.granola-claude/.env\n2. Contains: OPENAI_API_KEY=sk-...\n3. Has correct permissions: chmod 600 ~/.granola-claude/.env'
         }
 
 
@@ -228,19 +228,40 @@ def extract_meetings(days_back: int = 7, limit: int = None, with_intelligence: b
             'output_dir': str(output_dir)
         }
 
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         return {
             'status': 'error',
             'message': (
-                'Granola cache not found.\n'
-                'Make sure Granola is installed and you have recorded at least one meeting.\n'
-                'Expected location: ~/Library/Application Support/Granola/cache-v3.json'
+                'Granola cache not found.\n\n'
+                'Expected location: ~/Library/Application Support/Granola/cache-v3.json\n\n'
+                'Please ensure:\n'
+                '1. Granola is installed (https://www.granola.so)\n'
+                '2. You have recorded at least one meeting\n'
+                '3. You are on macOS (Granola is macOS-only)\n\n'
+                f'Technical details: {e}'
+            )
+        }
+    except ImportError as e:
+        return {
+            'status': 'error',
+            'message': (
+                'Missing Python dependencies.\n\n'
+                'Please run: pip install -r requirements.txt\n\n'
+                f'Missing module: {e}'
             )
         }
     except Exception as e:
         return {
             'status': 'error',
-            'message': f'Extraction error: {e}'
+            'message': (
+                f'Extraction error: {e}\n\n'
+                'This might be due to:\n'
+                '1. Invalid API key - check ~/.granola-claude/.env\n'
+                '2. Granola cache format changed - update plugin\n'
+                '3. Network issues - check internet connection\n\n'
+                'If this persists, please file an issue:\n'
+                'https://github.com/varadhjain/granola-claude-plugin/issues'
+            )
         }
 
 

@@ -34,9 +34,9 @@ Extract ALL action items, commitments, follow-ups, and next steps mentioned in t
    - "end of January" → last day of January
    - No deadline mentioned → 7 days default
 4. **Identify owner**:
-   - "I'll" / "I need to" → Varadh (meeting attendee)
+   - "I'll" / "I need to" → You (meeting attendee)
    - "You should" / "Can you" → Other person
-   - Unclear → Varadh (conservative default)
+   - Unclear → You (conservative default)
 5. **Provide context**: Why this TODO matters (1 sentence)
 
 # Entity Linking Rules:
@@ -56,7 +56,7 @@ Extract ALL action items, commitments, follow-ups, and next steps mentioned in t
   "todos": [
     {
       "action": "Send fund memo to [[Kristina]]",
-      "owner": "Varadh",
+      "owner": "You",
       "deadline": "2026-01-20",
       "deadline_confidence": "high|medium|low",
       "priority": "urgent|high|medium|low",
@@ -161,7 +161,7 @@ def extract_todos_from_meeting(
             # Ensure all fields exist
             validated_todo = {
                 'action': todo.get('action', ''),
-                'owner': todo.get('owner', 'Varadh'),
+                'owner': todo.get('owner', 'You'),
                 'deadline': todo.get('deadline', ''),
                 'deadline_confidence': todo.get('deadline_confidence', 'medium'),
                 'priority': todo.get('priority', 'medium'),

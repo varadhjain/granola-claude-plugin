@@ -137,22 +137,11 @@ def extract_attendees(doc: Dict) -> List[Attendee]:
     cal_event = doc.get('google_calendar_event') or {}
     attendee_list = cal_event.get('attendees', [])
 
-    # Your emails to filter out
-    self_emails = {
-        'varadhjain@gmail.com',
-        'me@varadhja.in',
-        'varadh@gmail.com',
-    }
-
     attendees = []
     for att in attendee_list:
         email = att.get('email', '').lower()
 
-        # Skip self
-        if email in self_emails:
-            continue
-
-        # Skip if marked as self
+        # Skip if marked as self (meeting organizer)
         if att.get('self'):
             continue
 
