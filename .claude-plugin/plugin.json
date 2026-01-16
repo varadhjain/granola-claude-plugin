@@ -1,7 +1,7 @@
 {
-  "name": "granola",
-  "version": "1.0.0",
-  "description": "Extract intelligence from Granola meeting notes with AI",
+  "name": "granola-archivist",
+  "version": "1.1.0",
+  "description": "Export and archive Granola meeting notes with optional AI intelligence",
   "author": "Varadh Jain",
   "homepage": "https://github.com/varadhjain/granola-claude-plugin",
   "repository": {

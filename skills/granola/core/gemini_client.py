@@ -26,7 +26,8 @@ try:
 
     # Try multiple locations for .env file (plugin portable)
     env_locations = [
-        Path.home() / '.granola-claude' / '.env',  # User config (primary)
+        Path.home() / '.granola-archivist' / '.env',  # User config (primary)
+        Path.home() / '.granola-claude' / '.env',  # Legacy config
         Path(__file__).parent.parent.parent / '.env',  # Plugin root
         Path(__file__).parent.parent / '.env',     # Repo root (dev)
         Path.cwd() / '.env'                         # Current dir (fallback)

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Granola extraction wrapper for Claude Code plugin.
+Granola Archivist extraction wrapper.
 
 Handles:
 - First-run setup (API key configuration)
 - Meeting extraction from Granola cache
 - AI intelligence extraction
-- Markdown output to ~/.granola-claude/output/
+- Markdown output to ~/.granola-archivist/output/
 """
 
 import argparse
@@ -23,9 +23,20 @@ from granola_extract_meetings import get_recent_meetings, MeetingData
 from granola_simple_extract import extract_intelligence_simple
 
 
+def get_config_dir() -> Path:
+    """Pick the best config dir (prefer new name, fall back to legacy)."""
+    new_dir = Path.home() / '.granola-archivist'
+    legacy_dir = Path.home() / '.granola-claude'
+    if new_dir.exists():
+        return new_dir
+    if legacy_dir.exists():
+        return legacy_dir
+    return new_dir
+
+
 def setup_directories():
     """Ensure output directories exist."""
-    config_dir = Path.home() / '.granola-claude'
+    config_dir = get_config_dir()
     output_dir = config_dir / 'output'
     cache_dir = config_dir / 'cache'
 
@@ -43,7 +54,7 @@ def check_setup():
     Returns:
         dict with status and message
     """
-    config_dir = Path.home() / '.granola-claude'
+    config_dir = get_config_dir()
     env_file = config_dir / '.env'
 
     if not env_file.exists():
@@ -51,11 +62,11 @@ def check_setup():
             'status': 'needs_setup',
             'message': (
                 "🔧 First-time setup needed!\n\n"
-                "This plugin needs your OpenAI API key to work.\n"
-                "It will be stored locally at: ~/.granola-claude/.env\n\n"
+                "This tool needs your OpenAI API key for AI extraction.\n"
+                f"It will be stored locally at: {env_file}\n\n"
                 "Run:\n"
-                "  mkdir -p ~/.granola-claude\n"
-                "  echo 'OPENAI_API_KEY=sk-your_key_here' > ~/.granola-claude/.env\n\n"
+                f"  mkdir -p {config_dir}\n"
+                f"  echo 'OPENAI_API_KEY=sk-your_key_here' > {env_file}\n\n"
                 "Then try again!"
             )
         }
@@ -70,18 +81,23 @@ def check_setup():
         if not api_key:
             return {
                 'status': 'needs_setup',
-                'message': 'OpenAI API key not found in ~/.granola-claude/.env\nPlease add: OPENAI_API_KEY=sk-...'
+                'message': f'OpenAI API key not found in {env_file}\nPlease add: OPENAI_API_KEY=sk-...'
             }
 
         return {
             'status': 'ready',
-            'message': '✓ Setup complete! OpenAI API key found at ~/.granola-claude/.env'
+            'message': f'✓ Setup complete! OpenAI API key found at {env_file}'
         }
 
     except Exception as e:
         return {
             'status': 'error',
-            'message': f'Setup error: {e}\n\nPlease ensure:\n1. File exists: ~/.granola-claude/.env\n2. Contains: OPENAI_API_KEY=sk-...\n3. Has correct permissions: chmod 600 ~/.granola-claude/.env'
+            'message': (
+                f'Setup error: {e}\n\nPlease ensure:\n'
+                f'1. File exists: {env_file}\n'
+                '2. Contains: OPENAI_API_KEY=sk-...\n'
+                f'3. Has correct permissions: chmod 600 {env_file}'
+            )
         }
 
 
@@ -161,10 +177,11 @@ def extract_meetings(days_back: int = 7, limit: int = None, with_intelligence: b
     Returns:
         dict with status and results
     """
-    # Check setup
-    setup_status = check_setup()
-    if setup_status['status'] != 'ready':
-        return setup_status
+    # Only require API key when intelligence extraction is enabled
+    if with_intelligence:
+        setup_status = check_setup()
+        if setup_status['status'] != 'ready':
+            return setup_status
 
     # Setup directories
     _, output_dir, _ = setup_directories()
@@ -256,7 +273,7 @@ def extract_meetings(days_back: int = 7, limit: int = None, with_intelligence: b
             'message': (
                 f'Extraction error: {e}\n\n'
                 'This might be due to:\n'
-                '1. Invalid API key - check ~/.granola-claude/.env\n'
+                f'1. Invalid API key - check {get_config_dir() / ".env"}\n'
                 '2. Granola cache format changed - update plugin\n'
                 '3. Network issues - check internet connection\n\n'
                 'If this persists, please file an issue:\n'

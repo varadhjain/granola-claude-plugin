@@ -1,19 +1,32 @@
-# Granola Claude Plugin
+# Granola Archivist
 
-Extract intelligence from Granola meeting notes with AI.
+Extract and archive Granola meeting notes with optional AI intelligence.
 
 ## Install
 
 ```bash
-# In Claude Code:
+# Claude Code plugin install:
 /plugin install github.com/varadhjain/granola-claude-plugin
 
-# Setup API key:
-mkdir -p ~/.granola-claude
-echo "OPENAI_API_KEY=sk-your_key_here" > ~/.granola-claude/.env
+# Or via marketplace:
+/plugin marketplace add varadhjain/granola-claude-plugin
+
+# Optional: enable AI extraction
+mkdir -p ~/.granola-archivist
+echo "OPENAI_API_KEY=sk-your_key_here" > ~/.granola-archivist/.env
 
 # Use it:
 "Extract my last 7 days of Granola meetings"
+
+# Or without AI (no key needed):
+"Extract my last 7 days of Granola meetings without AI"
+```
+
+## CLI (Any Terminal or Codex CLI)
+
+```bash
+python granola-claude-plugin/granola_archivist.py --days 7
+python granola-claude-plugin/granola_archivist.py --days 7 --no-intelligence
 ```
 
 ## Features
@@ -44,12 +57,12 @@ echo "OPENAI_API_KEY=sk-your_key_here" > ~/.granola-claude/.env
 
 - macOS (Granola is macOS-only)
 - Granola installed with at least one meeting
-- OpenAI API key (~$0.001 per meeting)
-- Claude Code
+- OpenAI API key (optional, only for AI extraction)
+- Claude Code (optional; plugin name: `granola-archivist`)
 
 ## Output
 
-Files saved to: `~/.granola-claude/output/`
+Files saved to: `~/.granola-archivist/output/`
 
 Format: `YYYY-MM-DD-meeting-title-attendee.md`
 
@@ -76,10 +89,13 @@ Each file contains:
 Install Granola and record at least one meeting.
 
 **"OpenAI API key not found"**
-Create `~/.granola-claude/.env` with:
+If you want AI extraction, create `~/.granola-archivist/.env` with:
 ```
 OPENAI_API_KEY=sk-your_key_here
 ```
+
+**Legacy config**
+If you already use `~/.granola-claude/`, it will still be detected.
 
 **"No meetings found"**
 Check date range (default: last 7 days).

@@ -1,6 +1,6 @@
-# Getting Started with Granola Plugin
+# Getting Started with Granola Archivist
 
-Quick start guide for using the Granola Claude Code plugin.
+Quick start guide for using Granola Archivist with Claude Code or any CLI.
 
 ---
 
@@ -8,35 +8,55 @@ Quick start guide for using the Granola Claude Code plugin.
 
 - macOS (Granola is macOS-only)
 - Granola installed with at least one recorded meeting
-- OpenAI API key ([get one here](https://platform.openai.com/api-keys))
-- Claude Code installed
+- OpenAI API key (optional, only for AI extraction)
+- Claude Code installed (optional; plugin name: `granola-archivist`)
 
 ---
 
 ## Installation (30 seconds)
 
-### 1. Install Plugin
+### 1. Install Plugin (Claude Code)
 
 In Claude Code:
 ```
 /plugin install github.com/varadhjain/granola-claude-plugin
 ```
 
-### 2. Setup API Key
+Or via marketplace:
+```
+/plugin marketplace add varadhjain/granola-claude-plugin
+```
+
+### 2. Setup API Key (Optional)
 
 Run in terminal:
 ```bash
-mkdir -p ~/.granola-claude
-echo "OPENAI_API_KEY=sk-your_key_here" > ~/.granola-claude/.env
+mkdir -p ~/.granola-archivist
+echo "OPENAI_API_KEY=sk-your_key_here" > ~/.granola-archivist/.env
 ```
 
 Replace `sk-your_key_here` with your actual OpenAI API key.
+Skip this step if you only want raw meeting exports.
 
-### 3. Test It
+### 3. Test It (Claude Code)
 
 In Claude Code:
 ```
 "Extract my last 3 Granola meetings"
+```
+
+Without AI (no key needed):
+```
+"Extract my last 3 Granola meetings without AI"
+```
+
+---
+
+## CLI Usage (Any Terminal or Codex CLI)
+
+```bash
+python granola-claude-plugin/granola_archivist.py --days 7
+python granola-claude-plugin/granola_archivist.py --days 7 --no-intelligence
 ```
 
 ---
@@ -66,16 +86,16 @@ In Claude Code:
 
 ## Where Are My Files?
 
-All meetings saved to: `~/.granola-claude/output/`
+All meetings saved to: `~/.granola-archivist/output/`
 
 You can open them with:
 ```bash
-open ~/.granola-claude/output/
+open ~/.granola-archivist/output/
 ```
 
 Or copy to your notes app:
 ```bash
-cp ~/.granola-claude/output/*.md ~/Documents/Notes/
+cp ~/.granola-archivist/output/*.md ~/Documents/Notes/
 ```
 
 ---
@@ -99,10 +119,13 @@ cp ~/.granola-claude/output/*.md ~/Documents/Notes/
 Install Granola and record at least one meeting.
 
 ### "OpenAI API key not found"
-Create `~/.granola-claude/.env` with:
+Only required for AI extraction. Create `~/.granola-archivist/.env` with:
 ```
 OPENAI_API_KEY=sk-your_key_here
 ```
+
+### Legacy config
+If you already use `~/.granola-claude/`, it will still be detected.
 
 ### "No meetings found"
 Check date range (default: last 7 days).

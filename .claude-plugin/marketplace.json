@@ -1,0 +1,12 @@
+{
+  "name": "granola-archivist",
+  "owner": {
+    "name": "Varadh Jain"
+  },
+  "plugins": [
+    {
+      "name": "granola-archivist",
+      "source": "./"
+    }
+  ]
+}
