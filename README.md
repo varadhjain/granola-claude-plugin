@@ -1,6 +1,7 @@
 # Granola Archivist
 
 Extract and archive Granola meeting notes with optional AI intelligence.
+Runs locally by default; the project author never sees your data.
 
 ## Install
 
@@ -34,7 +35,7 @@ python granola-claude-plugin/granola_archivist.py --days 7 --no-intelligence
 - Extract meetings with attendees, notes, AI summaries
 - AI-powered intelligence: people, companies, TODOs, insights
 - Markdown export for any note-taking app
-- Privacy-first: Your API key, your data stays local
+- Privacy-first: local by default; your API key and data stay on your machine
 
 ## Usage
 
@@ -78,9 +79,10 @@ Each file contains:
 
 ## Privacy
 
-- No data collection
-- Transcripts stay on your machine
-- Only sent to your OpenAI account
+- No data collection or telemetry
+- Author never receives or sees your data
+- Transcripts stay on your machine by default
+- If you enable AI, data is sent only to your OpenAI account
 - You control your data
 
 ## Troubleshooting
