@@ -24,14 +24,19 @@ from granola_simple_extract import extract_intelligence_simple
 
 
 def get_config_dir() -> Path:
-    """Pick the best config dir (prefer new name, fall back to legacy)."""
-    new_dir = Path.home() / '.granola-archivist'
-    legacy_dir = Path.home() / '.granola-claude'
-    if new_dir.exists():
-        return new_dir
-    if legacy_dir.exists():
-        return legacy_dir
-    return new_dir
+    """Return the preferred config dir for writes."""
+    return Path.home() / '.granola-archivist'
+
+
+def get_env_file() -> Path:
+    """Locate .env for API key (prefer new path, fall back to legacy)."""
+    new_env = Path.home() / '.granola-archivist' / '.env'
+    legacy_env = Path.home() / '.granola-claude' / '.env'
+    if new_env.exists():
+        return new_env
+    if legacy_env.exists():
+        return legacy_env
+    return new_env
 
 
 def setup_directories():
@@ -55,7 +60,7 @@ def check_setup():
         dict with status and message
     """
     config_dir = get_config_dir()
-    env_file = config_dir / '.env'
+    env_file = get_env_file()
 
     if not env_file.exists():
         return {
@@ -273,7 +278,7 @@ def extract_meetings(days_back: int = 7, limit: int = None, with_intelligence: b
             'message': (
                 f'Extraction error: {e}\n\n'
                 'This might be due to:\n'
-                f'1. Invalid API key - check {get_config_dir() / ".env"}\n'
+                f'1. Invalid API key - check {get_env_file()}\n'
                 '2. Granola cache format changed - update plugin\n'
                 '3. Network issues - check internet connection\n\n'
                 'If this persists, please file an issue:\n'
