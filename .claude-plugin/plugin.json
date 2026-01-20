@@ -3,7 +3,8 @@
   "version": "1.1.0",
   "description": "Export and archive Granola meeting notes with optional AI intelligence",
   "author": {
-    "name": "Varadh Jain"
+    "name": "Varadh Jain",
+    "email": "claude@varadhja.in"
   },
   "homepage": "https://github.com/varadhjain/granola-claude-plugin",
   "repository": "https://github.com/varadhjain/granola-claude-plugin.git",
