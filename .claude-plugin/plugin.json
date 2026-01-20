@@ -1,6 +1,6 @@
 {
   "name": "granola-archivist",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Export and archive Granola meeting notes with optional AI intelligence",
   "author": {
     "name": "Varadh Jain",
