@@ -2,15 +2,11 @@
   "name": "granola-archivist",
   "version": "1.1.0",
   "description": "Export and archive Granola meeting notes with optional AI intelligence",
-  "author": "Varadh Jain",
+  "author": {
+    "name": "Varadh Jain"
+  },
   "homepage": "https://github.com/varadhjain/granola-claude-plugin",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/varadhjain/granola-claude-plugin.git"
-  },
-  "requires": {
-    "claudeCode": ">=1.0.0"
-  },
+  "repository": "https://github.com/varadhjain/granola-claude-plugin.git",
   "keywords": ["granola", "meetings", "notes", "ai", "intelligence", "extraction"],
   "license": "MIT"
 }
