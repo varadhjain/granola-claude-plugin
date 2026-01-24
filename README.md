@@ -3,23 +3,54 @@
 Extract and archive Granola meeting notes with optional AI intelligence.
 Runs locally by default; the project author never sees your data.
 
+## How It Works
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                     │
+│  Granola App                 Plugin                  Output         │
+│  ═══════════                ════════                ════════        │
+│                                                                     │
+│  ┌──────────┐              ┌────────┐            ┌──────────┐     │
+│  │          │              │        │            │ 2024-... │     │
+│  │ Meeting  │─────────────▶│ Extract│───────────▶│  .md     │     │
+│  │ Recorder │              │        │            │          │     │
+│  │          │              │   +    │            │ Meeting  │     │
+│  └──────────┘              │        │            │ metadata │     │
+│       │                    │  AI    │            │ + notes  │     │
+│       │ Saves to           │ Intel  │            │ + summary│     │
+│       ▼                    │ (opt)  │            │ + intel  │     │
+│  cache-v3.json             │        │            │          │     │
+│  ~/Library/...             └────────┘            └──────────┘     │
+│                                                                     │
+│                            OpenAI (optional)     ~/.granola-...    │
+│                            GPT-5-nano            /output/          │
+│                            ~$0.0009/meeting                        │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
 ## Install
 
 ```bash
-# Claude Code plugin install:
-/plugin install github.com/varadhjain/granola-claude-plugin
-
-# Or via marketplace:
+# Step 1: Add the marketplace
 /plugin marketplace add varadhjain/granola-claude-plugin
 
-# Optional: enable AI extraction
+# Step 2: Install the plugin
+/plugin install granola-archivist
+
+# Optional: Enable AI extraction (requires OpenAI API key)
 mkdir -p ~/.granola-archivist
 echo "OPENAI_API_KEY=sk-your_key_here" > ~/.granola-archivist/.env
+```
 
-# Use it:
+## Usage
+
+```bash
+# With AI intelligence (extracts people, companies, TODOs, insights)
 "Extract my last 7 days of Granola meetings"
 
-# Or without AI (no key needed):
+# Without AI (just exports meeting notes and summaries - no API key needed)
 "Extract my last 7 days of Granola meetings without AI"
 ```
 
