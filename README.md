@@ -1,5 +1,9 @@
 # Granola Archivist
 
+> **Deprecated (April 2026)**: Granola encrypted their local cache starting with v6, so direct cache access no longer works. Use the [official Granola MCP](https://www.granola.ai/blog/granola-mcp) instead — it provides `list_meetings`, `get_meetings`, `get_meeting_transcript`, and `query_granola_meetings` tools via `https://mcp.granola.ai/mcp`. Works with Claude Code, Claude Desktop, ChatGPT, and Cursor.
+
+---
+
 Extract and archive Granola meeting notes with optional AI intelligence.
 Runs locally by default; the project author never sees your data.
 
